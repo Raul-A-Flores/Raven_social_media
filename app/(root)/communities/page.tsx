@@ -14,7 +14,7 @@ async function Page(){
     
     if(!userInfo?.onboarded ) redirect('/onboarding')
 
-    console.log(userInfo)
+   // console.log(userInfo)
     
     return(
         <>

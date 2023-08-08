@@ -16,7 +16,7 @@ async function Page(){
     
     if(!userInfo?.onboarded ) redirect('/onboarding')
 
-    console.log(userInfo)
+    //console.log(userInfo)
 
     const activity = await getActivity(userInfo._id);
 
