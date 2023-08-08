@@ -22,7 +22,7 @@ const Page = async ({ params } : { params: { id: string}}) => {
     
     if(!userInfo?.onboarded ) redirect('/onboarding')
 
-    console.log(userInfo)
+    // console.log(userInfo)
 
     return (
         <section>

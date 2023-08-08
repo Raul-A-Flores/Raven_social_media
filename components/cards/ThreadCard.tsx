@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from 'next/image';
+import { formatDateString } from "@/lib/utils";
 
 
 interface Props {
@@ -22,12 +23,23 @@ interface Props {
         author: {
             image: string;
         }
-    }[]
+    }[];
     isComment?: boolean;
 
 }
 
-const ThreadCard = ({ id,currentUserId,parentId,content,author,community,createdAt,comments, isComment}: Props) => {
+const ThreadCard = ({ 
+    id,
+    currentUserId,
+    parentId,
+    content,
+    author,
+    community,
+    createdAt,
+    comments, 
+    isComment}: Props) => {
+
+   
 
     return(
         <article className={`flex w-full flex-col rounded-xl ${isComment ? 'px-0 xs:px-7' : 'bg-dark-2 p-7'}`}>
@@ -98,6 +110,26 @@ const ThreadCard = ({ id,currentUserId,parentId,content,author,community,created
                     </div>
                 </div>
             </div>
+                {
+                    !isComment && community && (
+                        <Link href={`/communities/${community.id}`} className="mt-5 flex items-center">
+                            <p className="text-subtle-medium text-gray-1">
+                                {formatDateString(createdAt)}
+                                - { community.name} Community
+                            </p>
+
+                            <Image
+                            
+                                src={community.image}
+                                alt={community.name}
+                                width={14}
+                                height={14}
+                                className="object-cover rounded-full ml-1"
+                                />
+                        
+                        </Link>
+                    )
+                }
 
         </article>
 

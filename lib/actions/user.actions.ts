@@ -6,6 +6,7 @@ import Thread from '../models/thread.model';
 import User from '../models/user.models';
 import { connectToDB } from '../mongoose';
 import { revalidatePath } from 'next/cache';
+import Community from "../models/community.model";
 
 
 interface Params{
@@ -21,7 +22,12 @@ export async function fetchUser(userId:string) {
     try {
         connectToDB();
 
-        return await User.findOne({ id: userId})
+
+
+        return await User.findOne({ id: userId }).populate({
+            path: "communities",
+            model: Community,
+          });
     } catch (error: any) {
         throw new Error(`Failed to fetch user: ${error.message}`)
     }
@@ -76,16 +82,23 @@ export async function fetchUserPosts ( userId: string){
             .populate({
                 path: 'threads',
                 model: Thread,
-                populate: {
+                populate:[
+                    {
+                        path: "community",
+                        model: Community,
+                        select: "name id image _id",
+                      },
+                
+                    {
                     path: 'children',
                     model: Thread, 
                     populate: {
                         path: 'author',
                         model: User, 
                         select: 'name image id'
-                    }
-                }
-            })
+                    },
+                }]},
+            )
 
             return threads;
     } catch (error:any) {

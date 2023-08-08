@@ -26,6 +26,7 @@ import { updateUser } from '@/lib/actions/user.actions';
 import { usePathname, useRouter } from 'next/navigation'
 import { ThreadValidation } from '@/lib/validations/thread';
 import { createThread } from '@/lib/actions/thread.actions';
+import { useOrganization } from '@clerk/nextjs';
 
 interface Props {
     user: {
@@ -47,6 +48,7 @@ function PostThread({ userId}: { userId: string}){
         const { startUpload } = useUploadThing("media");
         const router = useRouter();
         const pathname = usePathname();
+        const { organization } = useOrganization();
     
     
         const form = useForm({
@@ -59,7 +61,14 @@ function PostThread({ userId}: { userId: string}){
 
 
     const onSubmit = async (values: z.infer<typeof ThreadValidation>) =>{
-        await createThread({text: values.thread, author: userId, communityId: null, path: pathname});
+
+        console.log("TESTTTTING", organization)
+
+        await createThread({
+            text: values.thread, 
+            author: userId, 
+            communityId: organization ? organization.id : null, 
+            path: pathname});
 
         router.push('/')
 
