@@ -44,14 +44,14 @@ interface Props {
 
 function PostThread({ userId}: { userId: string}){
     
-        const [files, setFiles] = useState<File[]>([]);
-        const { startUpload } = useUploadThing("media");
+
         const router = useRouter();
         const pathname = usePathname();
+        
         const { organization } = useOrganization();
     
     
-        const form = useForm({
+        const form = useForm<z.infer<typeof ThreadValidation>>({
             resolver: zodResolver(ThreadValidation),
             defaultValues: {
               thread: '',
