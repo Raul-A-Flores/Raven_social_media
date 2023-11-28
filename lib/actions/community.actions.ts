@@ -48,7 +48,7 @@ export async function createCommunity(
     throw error;
   }
 }
-/* 
+
 export async function fetchCommunityDetails(id: string) {
   try {
     connectToDB();
@@ -301,4 +301,4 @@ export async function deleteCommunity(communityId: string) {
     console.error("Error deleting community: ", error);
     throw error;
   }
-} */
+}
