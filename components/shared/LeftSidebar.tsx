@@ -11,7 +11,7 @@ import router, { Router } from 'next/router';
 
 function LeftSidebar(){
 
-    const route = useRouter();
+    const router = useRouter();
     const pathname = usePathname();
     const { userId } = useAuth();
 
@@ -24,9 +24,8 @@ function LeftSidebar(){
 
                     const isActive = (pathname.includes(link.route) && link.route.length > 1 || pathname === link.route)
 
-                    if(link.route === '/profile') link.route =`${link.route}/${userId}}`
-                     
-                
+                    if(link.route === '/profile') link.route =`${link.route}/${userId}`
+                    console.log(userId)
                     return(
                     <div>
                         <Link
